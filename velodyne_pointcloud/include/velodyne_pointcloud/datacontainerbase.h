@@ -67,6 +67,10 @@ public:
     }
     va_end(vl);
     cloud.point_step = offset;
+    // Added by Neel; COMMENT 3 LINES BELOW TO REVERT TO ORIGINIAL: REASON row_step is zero
+    cloud.width = config_.init_width;
+    cloud.height = config_.init_height;
+    cloud.is_dense = static_cast<uint8_t>(config_.is_dense);
     cloud.row_step = init_width * cloud.point_step;
   }
 
@@ -107,9 +111,10 @@ public:
 
     cloud.header.stamp = scan_msg->header.stamp;
     cloud.data.resize(scan_msg->packets.size() * config_.scans_per_packet * cloud.point_step);
-    cloud.width = config_.init_width;
-    cloud.height = config_.init_height;
-    cloud.is_dense = static_cast<uint8_t>(config_.is_dense);
+    // Changed by Neel; UNCOMMENT 3 LINES BELOW TO REVERT TO ORIGINAL: REASON row_step is zero
+    // cloud.width = config_.init_width;
+    // cloud.height = config_.init_height;
+    // cloud.is_dense = static_cast<uint8_t>(config_.is_dense);
   }
 
   virtual void addPoint(float x, float y, float z, const uint16_t ring, const uint16_t azimuth, const float distance,
